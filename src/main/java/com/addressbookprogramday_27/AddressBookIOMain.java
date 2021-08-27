@@ -80,6 +80,12 @@ public class AddressBookIOMain{
             operate.deleteContact();
             operate.showContact();
         }
+        
+        System.out.print("\nDo you want to delete? press Y / N : ");
+        char writeOption = sc.next().charAt(0);
+        if(writeOption == 'Y'){
+        	operate.writeContact();
+        }
         sc.close();
     }
 }

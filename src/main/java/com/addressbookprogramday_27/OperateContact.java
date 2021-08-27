@@ -1,5 +1,9 @@
 package com.addressbookprogramday_27;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
@@ -8,7 +12,8 @@ import java.util.stream.Collectors;
 public class OperateContact {
 
 	HashMap<String, AddressBook> contactMap = new HashMap<>();
-	   
+	public static String contactFile = "contactFile.txt";
+	
     public void editContact(){
 
         String address;
@@ -110,5 +115,27 @@ public class OperateContact {
             System.out.print("\nE-mail      : " +  contact.getEmail());
             System.out.print("\nZip         : " +  contact.getZip());
         } 
+    }
+    public void writeContact() {
+    	
+    	StringBuffer contactBuffer = new StringBuffer();
+    	contactMap.forEach((name,contact) -> {
+    		String contactString = contact.getFirstName().toString().concat(", ");
+    		contactString += contact.getLastName().toString().concat(", ");
+    		contactString += contact.getAddress().toString().concat(", ");
+    		contactString += contact.getCity().toString().concat(", ");
+    		contactString += contact.getState().toString().concat(", ");
+    		contactString += String.valueOf(contact.getPhoneNo()).concat(", ");
+    		contactString += contact.getEmail().toString().concat(", ");
+    		contactString += String.valueOf(contact.getZip()).concat("\n");
+    		contactBuffer.append(contactString);
+    	});
+    	try {
+    		
+    		Files.write(Paths.get(contactFile),contactBuffer.toString().getBytes());
+    		
+    	}catch(IOException e) {
+    		System.out.print("Unable to write contact into file" + e.getMessage());
+    	}
     }
 }
